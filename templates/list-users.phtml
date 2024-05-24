@@ -1,0 +1,100 @@
+<?php
+
+require "../config/connexion.php";
+
+$query = $db->prepare('SELECT * FROM users');
+
+$query->execute();
+$users = $query->fetchAll(PDO::FETCH_ASSOC);
+
+var_dump($users);
+
+?>
+
+<main class="container py-5">
+    <head>
+        <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    </head>
+    <h1>
+        Liste des utilisateurs
+    </h1>
+    <a href="" class="btn btn-primary mt-3"><span class="bi-plus-circle-fill"></span> Créer un utilisateur</a>
+    <table class="my-5 table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Email : 
+                </th>
+                <th>
+                    Mot de passe
+                </th>
+                <th>
+                    Prénom
+                </th>
+                <th>
+                    Nom
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($users as $row): ?>
+        <tr>
+            <td><?php echo htmlspecialchars($row['id']); ?></td>
+            <td><?php echo htmlspecialchars($row['email']); ?></td>
+            <td><?php echo htmlspecialchars($row['password']); ?></td>
+            <td><?php echo htmlspecialchars($row['first_name']); ?></td>
+            <td><?php echo htmlspecialchars($row['last_name']); ?></td>
+        </tr>
+    <?php endforeach; ?>
+                <td>
+                    <a href="index.php?route=show-user&id=<?php echo htmlspecialchars($row['id']); ?>" class="btn btn-primary"><scan class="bi-eye-fill">Show</scan></a>
+                    <a href="index.php?route=edit-user&id=<?php echo htmlspecialchars($row['id']); ?>" class="btn btn-success"><scan class="bi-pencil-fill">Edit</scan></a>
+                    <a href="logic/delete-user.php?id=<?php echo htmlspecialchars($row['id']); ?>" class="btn btn-danger"><scan class="bi-trash-fill">Delete</scan></a>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Mot de passe
+                </th>
+                <th>
+                    Prénom
+                </th>
+                <th>
+                    Nom
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</main>

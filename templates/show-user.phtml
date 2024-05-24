@@ -1,0 +1,23 @@
+<?php
+require "../config/connexion.php";
+
+$query = $db->prepare('SELECT * FROM users WHERE id = :id');
+$parameters = [
+    'id' => $_GET['id']
+    ];
+
+$query->execute($parameters);
+$user = $query->fetch(PDO::FETCH_ASSOC);
+
+?>
+
+<main class="container py-5 text-center">
+    <h1>Prénom et Nom de l'utilisateur</h1>
+    <p>
+    <?php echo htmlspecialchars($user['first_name']); ?> <?php echo htmlspecialchars($user['last_name']); ?>
+    </p>
+    <h2>email de l'utilisateur</h2>
+    <p>
+        <?php echo htmlspecialchars($user['email']); ?>
+    </p>
+</main>
